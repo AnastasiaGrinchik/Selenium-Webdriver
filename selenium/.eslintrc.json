@@ -1,0 +1,19 @@
+{
+    "env": {
+        "es2021": true,
+        "node": true
+    },
+    "extends": ["google"],
+    "parserOptions": {
+        "ecmaVersion": 6,
+        "sourceType": "module"
+    },
+    "rules": {
+        "linebreak-style": ["error", "windows"],
+        "space-before-function-paren": ["error", "always"],
+        "indent": ["error", 4, { "SwitchCase": 4 }],
+        "object-curly-spacing": ["error", "always"],
+        "max-len": ["error", { "code": 200 }],
+        "require-jsdoc": 0
+    }
+}
