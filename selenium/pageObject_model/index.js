@@ -1,7 +1,7 @@
-export { GoogleChrome } from './Basic.js';
-export { HomePagePastebin } from './HomePageSitePastebin.js';
-export { PastebinResults } from './PageSitePastebinResults.js';
-export { HomePageGoogleCloud } from './HomePageSiteGoogleCloud.js';
-export { CalculatorPage } from './CalculatorSitePage.js';
-export { CompletedForm } from './CalculatorCompletedForm.js';
-export { YopmailPage } from './YopmailSitePage.js';
+export { GoogleChrome } from './BasicPage.js';
+export { PastebinHome } from './PastebinHomePage.js';
+export { PastebinResults } from './PastebinResultsPage.js';
+export { GoogleCloudHome } from './GoogleCloudHomePage.js';
+export { CalculatorHome } from './CalculatorHomePage.js';
+export { CompletedForm } from './CompletedFormPage.js';
+export { YopmailHome } from './YopmailHomePage.js';

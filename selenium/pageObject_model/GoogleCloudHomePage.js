@@ -1,11 +1,11 @@
 import pkg from 'selenium-webdriver';
 const { Builder, Browser, By, wait, until, Key } = pkg;
-import { Basic } from './Basic.js';
+import { BasicPage } from './BasicPage.js';
 
-export class HomePageSiteGoogleCloud extends Basic {
+export class GoogleCloudHomePage extends BasicPage {
     constructor(driver) {
         super(driver);
-        this.urlHomeGoogleCloud = 'https://cloud.google.com';
+        this.urlGoogleCloudHome = 'https://cloud.google.com';
         this.searchButtonXpath =
             '//input[@class="devsite-search-field devsite-search-query"]';
         this.linkCalculatorXpath =
@@ -14,10 +14,6 @@ export class HomePageSiteGoogleCloud extends Basic {
             '//a[@href="https://cloud.google.com/identity-platform/pricing?hl=en"]';
         this.linkTwoForCalculatorXpath =
             '//a[@href="/products/calculator#tab=identity-platform"]';
-        this.dataForSearchCalculator =
-            'Google Cloud Platform Pricing Calculator';
-        this.searchButton = null;
-        this.linkCalculator = null;
     }
 
     async openCalculator() {
@@ -27,7 +23,7 @@ export class HomePageSiteGoogleCloud extends Basic {
         );
         await this.searchButton.click();
         await this.searchButton.sendKeys(
-            this.dataForSearchCalculator,
+            'Google Cloud Platform Pricing Calculator',
             Key.ENTER
         );
 
@@ -60,4 +56,4 @@ export class HomePageSiteGoogleCloud extends Basic {
     }
 }
 
-export let HomePageGoogleCloud = new HomePageSiteGoogleCloud('chrome');
+export let GoogleCloudHome = new GoogleCloudHomePage('chrome');

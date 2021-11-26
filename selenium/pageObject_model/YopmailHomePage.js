@@ -1,24 +1,20 @@
-import { Basic } from './Basic.js';
+import { BasicPage } from './BasicPage.js';
 import pkg from 'selenium-webdriver';
 const { Builder, Browser, By, wait, until, Key } = pkg;
-import { CalculatorCompletedForm } from './CalculatorCompletedForm.js';
+import { CompletedFormPage } from './CompletedFormPage.js';
 
-export class YopmailSitePage extends CalculatorCompletedForm {
-    constructor(driver) {
-        super(driver);
+export class YopmailHomePage extends CompletedFormPage {
+    constructor(browser) {
+        super(browser);
         this.urlYopmail = 'https://yopmail.com';
-        this.buttonRandomEmailXpath = '//*[@id="listeliens"]/a[1]/div[2]';
+        this.buttonRandomEmailXpath =
+            '//a[@href="email-generator"]//div[@class="txtlien"]';
         this.emailAdressXpath = '//*[@id="egen"]';
         this.buttonCheckEmailXpath = '//button[@onclick="egengo();"]';
         this.totalMonthCostXpath =
-            '//*[@id="mail"]/div/div/table/tbody/tr[2]/td/table/tbody/tr[3]/td[2]/h3';
+            '//*[@id="mail"]//h3[contains(text(), "USD")]';
         this.iframeMailXpath = '//iframe[@id="ifmail"]';
         this.buttonUpdateXpath = '//*[@id="refresh"]';
-        this.iframeMail = null;
-        this.buttonRandomEmail = null;
-        this.checkEmail = null;
-        this.emailContent = null;
-        this.totalMonthCost = null;
     }
 
     async openRandomEmail() {
@@ -30,7 +26,6 @@ export class YopmailSitePage extends CalculatorCompletedForm {
             By.xpath(this.buttonRandomEmailXpath)
         );
         await this.buttonRandomEmail.click();
-        return this;
     }
 
     async getEmailAdress() {
@@ -39,7 +34,6 @@ export class YopmailSitePage extends CalculatorCompletedForm {
             20000
         );
         this.emailContent = await email.getText();
-        return this;
     }
 
     async checkMail() {
@@ -48,7 +42,6 @@ export class YopmailSitePage extends CalculatorCompletedForm {
         );
 
         await this.buttonCheckEmail.click();
-        return this;
     }
 
     async updateMail() {
@@ -59,7 +52,6 @@ export class YopmailSitePage extends CalculatorCompletedForm {
 
         await this.driver.wait(until.elementIsVisible(buttonUpdate), 20000);
         await buttonUpdate.click();
-        return this;
     }
 
     async getTotalCost() {
@@ -84,8 +76,7 @@ export class YopmailSitePage extends CalculatorCompletedForm {
                 throw error;
             }
         }
-        return this;
     }
 }
 
-export let YopmailPage = new YopmailSitePage('chrome');
+export let YopmailHome = new YopmailHomePage('chrome');

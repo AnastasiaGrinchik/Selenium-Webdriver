@@ -1,42 +1,25 @@
 import pkg from 'selenium-webdriver';
 const { Builder, Browser, By, until, wait } = pkg;
-import { Basic } from './Basic.js';
+import { BasicPage } from './BasicPage.js';
 
-export class HomePageSitePastebin extends Basic {
-    constructor(driver) {
-        super(driver);
-        this.urlHomePastebin = 'https://pastebin.com';
+export class PastebinHomePage extends BasicPage {
+    constructor(browser) {
+        super(browser);
+        this.urlPastebinHome = 'https://pastebin.com';
         this.formXpath = '//*[@id="w0"]';
         this.textareaXpath = '//*[@id="postform-text"]';
         this.buttonCloseBannerXpath = '//*[@id="hideSlideBanner"]';
         this.syntaxSelectXpath = '//*[@id="select2-postform-format-container"]';
+        this.syntaxListXpath =
+            '//*[@id="select2-postform-format-results"]/li[@class="select2-results__option"]/ul';
         this.expirationSelectXpath =
             '//*[@id="select2-postform-expiration-container"]';
-        this.syntaxListXpath =
-            '//*[@id="select2-postform-format-results"]/li[2]/ul';
         this.expirationListXpath =
             '//*[@id="select2-postform-expiration-results"]';
-        this.syntaxItemXpath = '//li[contains(text(), "Bash")]';
-        this.expirationItemXpath = '//li[contains(text(), "10 Minutes")]';
+        this.itemXpath = '//li[contains(text(), "RAW")]';
         this.pasteTitleXpath = '//*[@id="postform-name"]';
         this.buttonCreateNewPasteXpath =
             '//*[@class="btn -big" and @type="submit"]';
-        this.form = null;
-        this.fieldOfPaste = null;
-        this.buttonCreateNewPaste = null;
-        this.pasteTitle = null;
-        this.frameBanner = null;
-        this.syntaxSelect = null;
-        this.syntaxList = null;
-        this.syntaxItem = null;
-        this.expirationSelect = null;
-        this.expirationItem = null;
-        this.expirationList = null;
-        this.pasteTitleText = null;
-        this.buttonCloseBanner = null;
-        this.dataTitleForTaskOne = 'helloweb';
-        this.dataTitleForTaskTwo = 'how to gain dominance among developers';
-        this.dataTextareaForTaskOne = 'Код: "Hello from WebDriver"';
         this.dataTextareaForTaskTwo =
             'git config --global user.name  "New Sheriff in Town"' +
             '\n' +
@@ -51,7 +34,6 @@ export class HomePageSitePastebin extends Basic {
             20000
         );
         await this.fieldOfPaste.sendKeys(data);
-        return this;
     }
 
     async fillSelect(
@@ -60,7 +42,8 @@ export class HomePageSitePastebin extends Basic {
         selectList,
         selectListXpath,
         selectItem,
-        selectItemXpath
+        locatorXpath,
+        optionText
     ) {
         await this.driver.wait(
             until.elementLocated(By.xpath(this.formXpath)),
@@ -96,13 +79,35 @@ export class HomePageSitePastebin extends Basic {
         );
         selectList = await this.driver.findElement(By.xpath(selectListXpath));
 
-        await this.driver.wait(
-            until.elementLocated(By.xpath(selectItemXpath)),
-            20000
-        );
-        selectItem = await selectList.findElement(By.xpath(selectItemXpath));
-        await selectItem.click();
-        return this;
+        async function setSearchWordAndSelectOption(
+            locatorXpath,
+            optionText,
+            browser
+        ) {
+            let itemLocator = await locatorXpath.replace('RAW', optionText);
+
+            await browser.driver.wait(
+                until.elementLocated(By.xpath(itemLocator)),
+                20000
+            );
+            selectItem = await selectList.findElement(By.xpath(itemLocator));
+            await selectItem.click();
+        }
+
+        async function selectOption(browser) {
+            await setSearchWordAndSelectOption(
+                locatorXpath,
+                optionText,
+                browser
+            );
+        }
+        selectOption(this);
+    }
+
+    async getSelectBefore(selectXpath) {
+        this.syntaxBefore = await this.driver
+            .wait(until.elementLocated(By.xpath(selectXpath)), 20000)
+            .getText();
     }
 
     async addPasteName(titleContent) {
@@ -115,7 +120,6 @@ export class HomePageSitePastebin extends Basic {
         );
         await this.pasteTitle.sendKeys(titleContent);
         this.pasteTitleText = await this.pasteTitle.getText();
-        return this;
     }
 
     async sendPaste() {
@@ -124,8 +128,7 @@ export class HomePageSitePastebin extends Basic {
             20000
         );
         await this.buttonCreateNewPaste.click();
-        return this;
     }
 }
 
-export let HomePagePastebin = new HomePageSitePastebin('chrome');
+export let PastebinHome = new PastebinHomePage();

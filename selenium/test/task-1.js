@@ -2,22 +2,23 @@ import '@babel/polyfill';
 import pkg from 'selenium-webdriver';
 const { Builder, Browser, By, until, wait } = pkg;
 
-import { HomePagePastebin } from './../../pageObject_model/index.js';
+import { PastebinHome } from '../pageObject_model/index.js';
 
 (async function () {
-    await HomePagePastebin.initAndOpenBrowser();
-    await HomePagePastebin.openPage(HomePagePastebin.urlHomePastebin);
-    await HomePagePastebin.addNewPaste(HomePagePastebin.dataTextareaForTaskOne);
+    await PastebinHome.initBrowser();
+    await PastebinHome.openPage(PastebinHome.urlPastebinHome);
+    await PastebinHome.addNewPaste('Hello from WebDriver');
 
-    await HomePagePastebin.fillSelect(
-        HomePagePastebin.expirationSelectXpath,
-        HomePagePastebin.expirationSelect,
-        HomePagePastebin.expirationList,
-        HomePagePastebin.expirationListXpath,
-        HomePagePastebin.expirationItem,
-        HomePagePastebin.expirationItemXpath
+    await PastebinHome.fillSelect(
+        PastebinHome.expirationSelectXpath,
+        PastebinHome.expirationSelect,
+        PastebinHome.expirationList,
+        PastebinHome.expirationListXpath,
+        PastebinHome.expirationItem,
+        PastebinHome.itemXpath,
+        '10 Minutes'
     );
 
-    await HomePagePastebin.addPasteName(HomePagePastebin.dataTitleForTaskOne);
-    await HomePagePastebin.sendPaste();
+    await PastebinHome.addPasteName('helloweb');
+    await PastebinHome.sendPaste();
 })();

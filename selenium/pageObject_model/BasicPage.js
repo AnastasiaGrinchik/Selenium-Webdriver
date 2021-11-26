@@ -1,21 +1,15 @@
 import pkg from 'selenium-webdriver';
 const { Builder, Capabilities, Browser, By, until, wait } = pkg;
 
-export class Basic {
-    constructor(driver) {
-        this.driver = driver;
-        this.totalCost = null;
-        this.firstTab = null;
-        this.allTabs = null;
-        this.originalWindow = null;
-        this.childWindow = null;
+export class BasicPage {
+    constructor() {
+        this.browser = 'chrome';
     }
 
-    async initAndOpenBrowser() {
-        this.driver = await new Builder().forBrowser(this.driver).build();
+    async initBrowser() {
+        this.driver = new Builder().forBrowser(this.browser).build();
         await this.driver;
         await this.driver.manage().window().maximize();
-        return this;
     }
 
     async openPage(url) {
@@ -30,13 +24,11 @@ export class Basic {
         this.originalWindow = await this.driver.getWindowHandle();
         await this.driver.switchTo().newWindow('tab');
         this.childWindow = await this.driver.getWindowHandle();
-        return this;
     }
 
-    async switchTab(window_) {
-        await this.driver.switchTo().window(window_);
-        return this;
+    async switchTab(window) {
+        await this.driver.switchTo().window(window);
     }
 }
 
-export let GoogleChrome = new Basic('chrome');
+export let GoogleChrome = new BasicPage('chrome');
