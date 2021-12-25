@@ -1,7 +1,7 @@
 import pkg from 'selenium-webdriver';
 const { Builder, Browser, By, until, wait } = pkg;
 import { GoogleCloudHomePage } from './GoogleCloudHomePage.js';
-
+// div[@id='select_container_92']//md-option/div[contains(text(), "Preemptible")]
 export class CalculatorHomePage extends GoogleCloudHomePage {
     constructor(browser) {
         super(browser);

@@ -32,3 +32,27 @@ export class BasicPage {
 }
 
 export let GoogleChrome = new BasicPage('chrome');
+
+class Paste {
+    constructor(pasteParametrs) {
+        this.name = pasteParametrs.name;
+        this.text = pasteParametrs.text;
+        this.syntax = pasteParametrs.syntax;
+        this.expirationTime = pasteParametrs.expirationTime;
+    }
+}
+
+ class PasteFactory{
+    constructor();
+    getFirstPaste() {
+        const pasteParametrs = {
+            name: 'helloweb',
+			text: 'Hello from WebDriver',
+			expirationTime: '10 Minutes'
+        } return new Paste(pasteParametrs)
+    }   
+
+
+
+let a = PasteFactory.getFirstPaste()
+console.log(a)
